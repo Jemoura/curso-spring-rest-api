@@ -20,22 +20,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.algaworks.osworks.domain.model.Client;
 import com.algaworks.osworks.domain.repository.ClientRepository;
+import com.algaworks.osworks.domain.service.ClientService;
 
 @RestController
 @RequestMapping("/clients")
 public class ClientController {
 	
 	@Autowired
-	ClientRepository clientRepository;
+	private ClientRepository clientRepository;
+	
+	@Autowired
+	private ClientService clientService;
 	
 	@GetMapping
 	public List<Client> listAll() {
-		return clientRepository.findAll();		
+		return clientService.listAll();		
 	}
 	
 	@GetMapping("/{clientId}")
 	public ResponseEntity<Client> fetch(@PathVariable Long clientId) {
-		Optional<Client> client = clientRepository.findById(clientId);
+		Optional<Client> client = clientService.fetch(clientId);
 		
 		if(client.isPresent()) {
 			return ResponseEntity.ok(client.get());
@@ -47,7 +51,7 @@ public class ClientController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Client insert(@Valid @RequestBody Client client) {
-		return clientRepository.save(client);		
+		return clientService.insert(client);		
 	}
 	
 	@PutMapping("/{clientId}")
@@ -57,8 +61,7 @@ public class ClientController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		client.setId(clientId);
-		client = clientRepository.save(client);
+		clientService.update(clientId, client);
 		
 		return ResponseEntity.ok(client);
 	}
@@ -70,7 +73,7 @@ public class ClientController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		clientRepository.deleteById(clientId);
+		clientService.delete(clientId);
 		
 		return ResponseEntity.noContent().build();
 	}
