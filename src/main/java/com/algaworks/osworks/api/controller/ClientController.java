@@ -3,9 +3,12 @@ package com.algaworks.osworks.api.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,12 +46,12 @@ public class ClientController {
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public Client insert(@RequestBody Client client) {
+	public Client insert(@Valid @RequestBody Client client) {
 		return clientRepository.save(client);		
 	}
 	
 	@PutMapping("/{clientId}")
-	public ResponseEntity<Client> update(@PathVariable Long clientId, @RequestBody Client client) {
+	public ResponseEntity<Client> update(@Valid @PathVariable Long clientId, @RequestBody Client client) {
 		
 		if(!clientRepository.existsById(clientId)) {
 			return ResponseEntity.notFound().build();
@@ -60,6 +63,7 @@ public class ClientController {
 		return ResponseEntity.ok(client);
 	}
 	
+	@DeleteMapping("/{clientId}")
 	public ResponseEntity<Void> delete(@PathVariable Long clientId) {
 		
 		if(!clientRepository.existsById(clientId)) {
