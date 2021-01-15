@@ -18,6 +18,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.algaworks.osworks.domain.exception.BusinessRuleException;
+import com.algaworks.osworks.domain.exception.EntityNotFoundException;
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
@@ -27,6 +28,18 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler(BusinessRuleException.class)
 	public ResponseEntity<Object> handleBusinessRule(BusinessRuleException ex, WebRequest request) {
+		var status = HttpStatus.BAD_REQUEST;
+		
+		var problem = new Problem();
+		problem.setStatus(status.value());
+		problem.setTitle(ex.getMessage());
+		problem.setDateTime(OffsetDateTime.now());
+		
+		return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
+	}
+	
+	@ExceptionHandler(EntityNotFoundException.class)
+	public ResponseEntity<Object> handleEntityNotFound(BusinessRuleException ex, WebRequest request) {
 		var status = HttpStatus.BAD_REQUEST;
 		
 		var problem = new Problem();
