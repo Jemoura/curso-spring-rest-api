@@ -1,6 +1,8 @@
 package com.algaworks.osworks.domain.service;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,9 +30,18 @@ public class ServiceOrderService {
 		
 		serviceOrder.setClient(client);
 		serviceOrder.setStatus(ServiceOrderStatus.OPEN);
-		serviceOrder.setOpeningDate(LocalDateTime.now());
+		serviceOrder.setOpeningDate(OffsetDateTime.now());
 		
 		return serviceOrderRepository.save(serviceOrder);
+	}
+	
+	public List<ServiceOrder> listAll() {
+		return serviceOrderRepository.findAll();
+	}
+	
+	public Optional<ServiceOrder> fetch(Long serviceOrderId) {
+		Optional<ServiceOrder> serviceOrder = serviceOrderRepository.findById(serviceOrderId);
+		return serviceOrder;		
 	}
 
 }

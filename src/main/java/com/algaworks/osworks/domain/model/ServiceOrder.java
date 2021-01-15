@@ -1,7 +1,7 @@
 package com.algaworks.osworks.domain.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,16 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.groups.ConvertGroup;
-import javax.validation.groups.Default;
-
-import com.algaworks.osworks.domain.ValidationGroups;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
 
 @Entity
 public class ServiceOrder {
@@ -27,28 +17,18 @@ public class ServiceOrder {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Valid
-	@ConvertGroup(from = Default.class, to = ValidationGroups.ClientId.class)
-	@NotNull
+		
 	@ManyToOne	
 	private Client client;
 	
-	@NotBlank
 	private String description;
-	
-	@NotNull
 	private BigDecimal price;
-	
-	@JsonProperty(access = Access.READ_ONLY)
+
 	@Enumerated(EnumType.STRING)
 	private ServiceOrderStatus status;
 	
-	@JsonProperty(access = Access.READ_ONLY)
-	private LocalDateTime dateOpened;
-	
-	@JsonProperty(access = Access.READ_ONLY)
-	private LocalDateTime dateClosed;
+	private OffsetDateTime dateOpened;	
+	private OffsetDateTime dateClosed;
 	
 	public Long getId() {
 		return id;
@@ -90,19 +70,19 @@ public class ServiceOrder {
 		this.status = status;
 	}
 	
-	public LocalDateTime getOpeningDate() {
+	public OffsetDateTime getOpeningDate() {
 		return dateOpened;
 	}
 	
-	public void setOpeningDate(LocalDateTime dateOpened) {
+	public void setOpeningDate(OffsetDateTime dateOpened) {
 		this.dateOpened = dateOpened;
 	}
 	
-	public LocalDateTime getClosureDate() {
+	public OffsetDateTime getClosureDate() {
 		return dateClosed;
 	}
 	
-	public void setClosureDate(LocalDateTime dateClosed) {
+	public void setClosureDate(OffsetDateTime dateClosed) {
 		this.dateClosed = dateClosed;
 	}
 
