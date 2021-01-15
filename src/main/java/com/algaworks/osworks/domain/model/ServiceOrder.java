@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.algaworks.osworks.api.model.Comment;
+import com.algaworks.osworks.domain.exception.BusinessRuleException;
 
 @Entity
 public class ServiceOrder {
@@ -126,5 +127,22 @@ public class ServiceOrder {
 			return false;
 		return true;
 	}	
+	
+	public boolean canBeFinalized() {
+		return ServiceOrderStatus.OPEN.equals(getStatus());
+	}
+	
+	public boolean cannotBeFinalized() {
+		return !canBeFinalized();
+	}
+	
+	public void finalize() {
+		if (cannotBeFinalized()) {
+			throw new BusinessRuleException("Ordem de serviço não pode ser finalizada.");
+		}
+		
+		setStatus(ServiceOrderStatus.FINALIZED);
+		setClosureDate(OffsetDateTime.now());
+	}
 
 }

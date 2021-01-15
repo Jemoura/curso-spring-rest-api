@@ -51,8 +51,7 @@ public class ServiceOrderService {
 	}
 	
 	public Comment addComment(Long serviceOrderId, String description) {
-		ServiceOrder serviceOrder = serviceOrderRepository.findById(serviceOrderId)
-				.orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada."));
+		ServiceOrder serviceOrder = get(serviceOrderId);
 		
 		Comment comment = new Comment();
 		comment.setDescription(description);
@@ -60,6 +59,17 @@ public class ServiceOrderService {
 		comment.setServiceOrder(serviceOrder);
 		
 		return commentRepository.save(comment);		
+	}
+
+	private ServiceOrder get(Long serviceOrderId) {
+		return serviceOrderRepository.findById(serviceOrderId)
+				.orElseThrow(() -> new EntityNotFoundException("Ordem de serviço não encontrada."));
+	}
+	
+	public void finalize(Long serviceOrderId) {
+		ServiceOrder serviceOrder = get(serviceOrderId);
+		serviceOrder.finalize();		
+		serviceOrderRepository.save(serviceOrder);		
 	}
 
 }
