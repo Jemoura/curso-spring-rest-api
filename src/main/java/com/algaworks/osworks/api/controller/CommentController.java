@@ -19,7 +19,6 @@ import com.algaworks.osworks.api.model.CommentInputModel;
 import com.algaworks.osworks.api.model.CommentModel;
 import com.algaworks.osworks.domain.exception.EntityNotFoundException;
 import com.algaworks.osworks.domain.model.ServiceOrder;
-import com.algaworks.osworks.domain.repository.ServiceOrderRepository;
 import com.algaworks.osworks.domain.service.ServiceOrderService;
 
 @RestController
@@ -28,10 +27,7 @@ public class CommentController {
 	
 	@Autowired
 	private ServiceOrderService serviceOrderService;
-	
-	@Autowired
-	private ServiceOrderRepository serviceOrderRepository;
-	
+		
 	@Autowired
 	private ModelMapper modelMapper;
 	

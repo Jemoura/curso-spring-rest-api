@@ -79,19 +79,19 @@ public class ServiceOrder {
 		this.status = status;
 	}
 	
-	public OffsetDateTime getOpeningDate() {
+	public OffsetDateTime getDateOpened() {
 		return dateOpened;
 	}
 	
-	public void setOpeningDate(OffsetDateTime dateOpened) {
+	public void setDateOpened(OffsetDateTime dateOpened) {
 		this.dateOpened = dateOpened;
 	}
 	
-	public OffsetDateTime getClosureDate() {
+	public OffsetDateTime getDateClosed() {
 		return dateClosed;
 	}
 	
-	public void setClosureDate(OffsetDateTime dateClosed) {
+	public void setDateClosed(OffsetDateTime dateClosed) {
 		this.dateClosed = dateClosed;
 	}
 		
@@ -142,7 +142,7 @@ public class ServiceOrder {
 		}
 		
 		setStatus(ServiceOrderStatus.FINALIZED);
-		setClosureDate(OffsetDateTime.now());
+		setDateClosed(OffsetDateTime.now());
 	}
 
 }

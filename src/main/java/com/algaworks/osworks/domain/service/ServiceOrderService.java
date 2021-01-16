@@ -36,7 +36,7 @@ public class ServiceOrderService {
 		
 		serviceOrder.setClient(client);
 		serviceOrder.setStatus(ServiceOrderStatus.OPEN);
-		serviceOrder.setOpeningDate(OffsetDateTime.now());
+		serviceOrder.setDateOpened(OffsetDateTime.now());
 		
 		return serviceOrderRepository.save(serviceOrder);
 	}
@@ -46,7 +46,7 @@ public class ServiceOrderService {
 	}
 	
 	public Optional<ServiceOrder> fetch(Long serviceOrderId) {
-		Optional<ServiceOrder> serviceOrder = serviceOrderRepository.findById(serviceOrderId);
+		Optional<ServiceOrder> serviceOrder = serviceOrderRepository.findById(serviceOrderId);		
 		return serviceOrder;		
 	}
 	

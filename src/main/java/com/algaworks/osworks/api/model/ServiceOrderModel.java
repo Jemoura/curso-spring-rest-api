@@ -2,6 +2,8 @@ package com.algaworks.osworks.api.model;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.algaworks.osworks.domain.model.ServiceOrderStatus;
 
@@ -15,11 +17,13 @@ public class ServiceOrderModel {
 	private OffsetDateTime dateOpened;
 	private OffsetDateTime dateClosed;
 	
-	public Long getIdLong() {
+	private List<CommentModel> comments = new ArrayList<>();
+	
+	public Long getId() {
 		return id;
 	}
 	
-	public void setIdLong(Long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}		
 	
@@ -70,5 +74,13 @@ public class ServiceOrderModel {
 	public void setDateClosed(OffsetDateTime dateClosed) {
 		this.dateClosed = dateClosed;
 	}
+
+	public List<CommentModel> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<CommentModel> comments) {
+		this.comments = comments;
+	}	
 	
 }

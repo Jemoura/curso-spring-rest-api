@@ -50,9 +50,8 @@ public class ServiceOrderController {
 	@GetMapping("/{serviceOrderId}")
 	public ResponseEntity<ServiceOrderModel> fetch(@PathVariable Long serviceOrderId) {
 		Optional<ServiceOrder> serviceOrder = serviceOrderService.fetch(serviceOrderId);
-		
 		if(serviceOrder.isPresent()) {
-			ServiceOrderModel serviceOrderModel = toModel(serviceOrder.get());
+			ServiceOrderModel serviceOrderModel = toModel(serviceOrder.get());				
 			return ResponseEntity.ok(serviceOrderModel);
 		}
 		
@@ -66,7 +65,7 @@ public class ServiceOrderController {
 	}
 	
 	private ServiceOrderModel toModel(ServiceOrder serviceOrder ) {
-		return modelMapper.map(serviceOrder, ServiceOrderModel.class);		
+		return modelMapper.map(serviceOrder, ServiceOrderModel.class);		 		
 	}
 	
 	private List<ServiceOrderModel> toCollectionModel(List<ServiceOrder> serviceOrders) {
